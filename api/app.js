@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 const compression = require('compression')
-const { AuthRoutes } = require('./routes')
+const { AuthRoutes, UserRoutes } = require('./routes')
 
 // Define the express application
 const app = express()
@@ -21,6 +21,7 @@ app.use(morgan('dev'))
 
 // Correct REST naming
 app.use('/api/auths', AuthRoutes)
+app.use('/api/users', UserRoutes)
 
 app.get('/', (req, res) => {
     res.send("Hello world")
