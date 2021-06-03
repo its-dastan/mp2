@@ -24,12 +24,12 @@ const AuthService = {
         try {
             // Check if User exists
             const user = await User.findOne({ email: email })
+            console.log(user);
 
             // If User isn't found
             if (!user || user.active == false) {
                 return { error: 'Either user doesn\'t exist or was removed from the system' }
             }
-
             //Decrypt the password
             const decryptedPassword = await Password.decryptPassword(password, user.password)
 
@@ -74,7 +74,7 @@ const AuthService = {
             let data = {
                 first_name: userData.first_name,
                 last_name: userData.last_name,
-                fulll_name: userData.first_name + ' ' + userData.last_name,
+                full_name: userData.first_name + ' ' + userData.last_name,
                 email: userData.email,
                 password: encryptedPassword.password
             }
