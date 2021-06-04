@@ -6,7 +6,6 @@ const AuthControllers = {
         try {
             // Fetch data from the requset body
             let { email, password } = req.body
-            console.log({ email, password });
             // Call the signIn function
             AuthService.signIn(email, password).then((data) => {
                 // Send Status 200
