@@ -27,6 +27,10 @@ const UserSchema = new Schema({
         required: true,
         unique: true
     },
+    liked_blogs: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Blogs'
+    }],
     password: {
         type: String,
         required: true

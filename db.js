@@ -8,7 +8,8 @@ const dbURL = 'mongodb://localhost:27017/minor-project2'
 const options = {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 }
 
 mongoose.connect(dbURL, options)

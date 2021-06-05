@@ -1,4 +1,4 @@
-const { Blogs, Likes, Comments } = require('../models')
+const { User, Blogs, Likes, Comments } = require('../models')
 
 const BlogService = {
     async addBlog(caption, image, video, userId) {
@@ -24,28 +24,53 @@ const BlogService = {
     },
 
     async likeOrDislike(userId, blogId) {
-        console.log(blogId);
         return new Promise(async (resolve, reject) => {
             try {
-                // Find the Blog
-                const blog = await Blogs.findOne({ _id: blogId })
-                if (!blog) reject({ error: "The requested blog doesn't exist anymore" })
-                // Prepare the like data
-                const data = {
-                    blog: blogId,
-                    liked_by: userId,
+                // Get the user
+                const user = await User.findOne({ _id: userId })
+
+                // Check If it already liked the blog or not
+                if (user.liked_blogs.includes(blogId)) { // If Liked Dislike it
+                    // Remove the like from Like Collection
+                    const likes = await Likes.findOneAndDelete({ blogId: blogId, liked_by: userId })
+
+                    // Remove the like from the blog document
+                    const blog = await Blogs.findOneAndUpdate({ _id: blogId }, { $pull: { likes: likes._id } })
+                    await blog.save()
+
+                    // Remove the blog from User document
+                    const user = await User.findOneAndUpdate({ _id: userId }, { $pull: { liked_blogs: blogId } })
+                    await user.save()
+                    resolve({
+                        message: "Disliked the blog",
+                        blog: blog
+                    })
+                } else {
+                    // Get the Blog
+                    const blog = await Blogs.findOne({ _id: blogId })
+                    if (!blog) reject({ error: "The requested blog doesn't exist anymore" })
+                    const data = {
+                        blogId: blogId,
+                        liked_by: userId,
+                    }
+
+                    // Create a like doument
+                    let like = await Likes.create(data)
+                    if (!like) reject({ message: "Coludn\'t create the like table" })
+
+                    // Add that like to the blog document
+                    blog.likes.push(like)
+                    await blog.save()
+
+                    // Add the blog to the user document
+                    user.liked_blogs.push(blog)
+                    await user.save()
+                    resolve({
+                        message: "Liked the Blog",
+                        blog: blog
+                    })
                 }
-                // Create a new Like
-                let like = await Likes.create(data)
-                if (!like) reject({ message: "Coludn\'t create the like table" })
 
-                // Push the like object in current blog
-                blog.likes.push(like)
-
-                //save the blog
-                blog.save()
-                console.log(blog);
-                resolve({ blog: blog })
             } catch (error) {
                 reject({ error: "Sorry, Problem at server side!" })
             }

@@ -4,9 +4,11 @@ const UserService = {
     async getUser(userId) {
         return new Promise(async (resolve, reject) => {
             try {
-                // Find the User
+                // Get the User
                 const user = await User.findOne({ _id: userId })
                 if (!user) reject({ error: 'User does not exists' })
+
+                // Fetch the user
                 resolve(user)
             } catch (error) {
                 reject(error)
@@ -17,6 +19,7 @@ const UserService = {
     async updateUser(userId, userData) {
         return new Promise(async (resolve, reject) => {
             try {
+                // Direct update the user
                 const user = await User.findByIdAndUpdate({
                     _id: userId
                 }, {

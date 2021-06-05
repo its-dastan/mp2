@@ -30,11 +30,10 @@ const BlogControllers = {
 
     async likeOrDislike(req, res, next) {
         try {
-            const { userId } = req.params
-            const { blogId } = req.body
+            const { userId, blogId } = req.params
             BlogService.likeOrDislike(userId, blogId).then((data) => {
                 return res.status(200).json({
-                    message: "Successfully likes or disliked",
+                    message: data.message,
                     like: data.blog
                 })
             }).catch((error) => {
