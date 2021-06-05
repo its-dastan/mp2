@@ -1,6 +1,5 @@
 const { AuthService } = require("../services")
 
-
 const AuthControllers = {
     async signIn(req, res, next) {
         try {

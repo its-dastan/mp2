@@ -1,5 +1,4 @@
 const { UserService } = require('../services')
-const { getUser, updateUser } = require('../services/user.service')
 
 const UserControllers = {
     async getUser(req, res, next) {
