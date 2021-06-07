@@ -6,7 +6,6 @@ const UserControllers = {
             // Fetch data from the params
             let { userId } = req.params
 
-
             // Call the user function
             UserService.getUser(userId).then((data) => {
                 return res.status(200).json({

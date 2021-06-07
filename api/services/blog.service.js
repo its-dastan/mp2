@@ -75,6 +75,33 @@ const BlogService = {
                 reject({ error: "Sorry, Problem at server side!" })
             }
         })
-    }
+    },
+
+
+    async addComment(comment, blogId, userId) {
+        console.log(comment);
+        return new Promise(async (resolve, reject) => {
+            try {
+                const blog = await Blogs.findOne({ _id: blogId })
+                const data = {
+                    comment: comment,
+                    blogId: blogId,
+                    comment_by: userId,
+                }
+
+                const commentDb = await Comments.create(data)
+                await commentDb.save()
+
+                if (!commentDb) {
+                    reject({ error: "Couldn\'t comment! Try again." })
+                }
+                blog.comments.push(commentDb)
+                await blog.save()
+                resolve({ blog: blog })
+            } catch (error) {
+                reject({ error: "Error at Database!" })
+            }
+        })
+    },
 }
 module.exports = BlogService

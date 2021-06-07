@@ -42,11 +42,33 @@ const BlogControllers = {
                     error: error
                 })
             })
-
         } catch (error) {
             return res.status(500).json({
                 message: "Couldn\'t do the like or dislike operation",
                 error: error
+            })
+        }
+    },
+
+    async addComment(req, res, next) {
+        try {
+            const { userId, blogId } = req.params
+            const { comment } = req.body
+
+            BlogService.addComment(comment, blogId, userId).then((data) => {
+                return res.status(200).json({
+                    message: "Comment posted!",
+                    blog: data.blog
+                })
+            }).catch((error) => {
+                return res.status(500).json({
+                    message: 'Invalid catch Error',
+                    error: error
+                })
+            })
+        } catch (error) {
+            return res.status(500).json({
+                message: "Invalid server error"
             })
         }
     }

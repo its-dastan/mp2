@@ -7,7 +7,7 @@ const CommentSchema = new Schema({
         type: String,
         default: null
     },
-    blog: {
+    blogId: {
         type: Schema.Types.ObjectId,
         ref: 'Blogs'
     },
