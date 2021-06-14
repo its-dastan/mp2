@@ -103,5 +103,24 @@ const BlogService = {
             }
         })
     },
+
+    async deleteComment(commentId, blogId) {
+        return new Promise(async (resolve, reject) => {
+
+            try {
+
+
+                const comment = await Comments.findOneAndDelete({ _id: commentId })
+
+
+                const blog = await Blogs.findOneAndUpdate({ _id: blogId }, { $pull: { comments: commentId } })
+                console.log(blog);
+
+                resolve({ blog: blog })
+            } catch (error) {
+                reject({ error: "Error at databases." })
+            }
+        })
+    }
 }
 module.exports = BlogService

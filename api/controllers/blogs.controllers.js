@@ -1,3 +1,4 @@
+const { deleteComment } = require('../services/blog.service.js');
 const { BlogService } = require('../services/index.js')
 
 const BlogControllers = {
@@ -68,6 +69,28 @@ const BlogControllers = {
             })
         } catch (error) {
             return res.status(500).json({
+                message: "Invalid server error"
+            })
+        }
+    },
+
+    async deleteComment(req, res, next) {
+        try {
+            const { commentId, blogId } = req.params
+            // console.log({ commentId, blogId });
+            BlogService.deleteComment(commentId, blogId).then((data) => {
+                return res.status(200).json({
+                    message: "comment deleted!",
+                    blog: data.blog
+                })
+            }).catch((error) => {
+                return res.status(500).json({
+                    message: "Invalid catch error",
+                    error: error
+                })
+            })
+        } catch (error) {
+            return res.status(200).json({
                 message: "Invalid server error"
             })
         }
