@@ -1,12 +1,10 @@
-const AuthService = require("../services/auth.service")
-
+const { AuthService } = require("../services")
 
 const AuthControllers = {
     async signIn(req, res, next) {
         try {
             // Fetch data from the requset body
             let { email, password } = req.body
-
             // Call the signIn function
             AuthService.signIn(email, password).then((data) => {
                 // Send Status 200
@@ -17,7 +15,7 @@ const AuthControllers = {
                 })
             }).catch((error) => {
                 return res.status(500).json({
-                    message: 'Internal server error!',
+                    message: 'Internal catch error!',
                     error: error
                 })
             })
@@ -32,7 +30,8 @@ const AuthControllers = {
     async signUp(req, res, next) {
         try {
             // Fetch data from the requset body
-            let { user } = req.body
+            const user = req.body
+            console.log(req.body);
 
             // Call the signIn function
             AuthService.signUp(user).then((data) => {
@@ -43,8 +42,9 @@ const AuthControllers = {
                     token: data.token
                 })
             }).catch((error) => {
+                console.log(error);
                 return res.status(500).json({
-                    message: 'Internal server error!',
+                    message: 'Internal catch error!',
                     error: error
                 })
             })

@@ -24,8 +24,13 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
+    liked_blogs: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Blogs'
+    }],
     password: {
         type: String,
         required: true
