@@ -2,10 +2,13 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 const compression = require('compression')
-const { AuthRoutes, UserRoutes, BlogRoutes } = require('./routes')
+const { AuthRoutes } = require('./routes')
 
 // Define the express application
 const app = express()
+
+// To access the public folder
+app.use(express.static("public"));
 
 // Open Mongoose Connection to db
 require('../db')
@@ -21,11 +24,10 @@ app.use(morgan('dev'))
 
 // Correct REST naming
 app.use('/api/auths', AuthRoutes)
-app.use('/api/users', UserRoutes)
-app.use('/api/blogs', BlogRoutes)
 
 app.get('/', (req, res) => {
-    res.send("Hello world")
+    res.sendFile(__dirname + "/public/index.html");
+    // res.send("Hello world")
 })
 
 app.post('/getData', (req, res) => {
