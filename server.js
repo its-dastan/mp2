@@ -11,7 +11,7 @@ if (cluster.isMaster) {
     const io = require('socket.io')(server)
     const redis = require('socket.io-redis')
 
-    io.adapter(redis({ host: 'localhost', port: 6379 }))
+    // io.adapter(redis({ host: 'localhost', port: 3000 }))
 
     setInterval(() => {
         io.emit('data', 'payload')
@@ -42,7 +42,7 @@ if (cluster.isMaster) {
     const server = http.createServer(app)
 
     // Start the socket server
-    const io = Socket.init(server)
+    // const io = Socket.init(server)
 
     server.listen(PORT, () => {
         console.log(`🌎 Server Runiing at : ${PORT}`);
