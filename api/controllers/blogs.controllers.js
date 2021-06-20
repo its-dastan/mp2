@@ -2,7 +2,6 @@ const { deleteComment, getBlogs } = require('../services/blog.service.js');
 const { BlogService } = require('../services/index.js')
 
 const BlogControllers = {
-    // GET: http://localhost:3000/api/blogs
     async getBlogs(req, res, next) {
         try {
             BlogService.getBlogs().then((data) => {
@@ -24,7 +23,6 @@ const BlogControllers = {
             })
         }
     },
-    // POST:  http://localhost:3000/api/blogs/upload/{userId}
     async addBlog(req, res, next) {
         try {
             // Fetch UserId from the req.params
@@ -54,7 +52,6 @@ const BlogControllers = {
             })
         }
     },
-    // GET: http://localhost:3000/api/blogs/like/{userId}/{blogId}
     async likeOrDislike(req, res, next) {
         try {
             const { userId, blogId } = req.params
@@ -76,7 +73,6 @@ const BlogControllers = {
             })
         }
     },
-    // POST: http://localhost:3000/api/blogs/comment/{userId}/{blogId}
     async addComment(req, res, next) {
         try {
             const { userId, blogId } = req.params
@@ -99,7 +95,6 @@ const BlogControllers = {
             })
         }
     },
-    // GET: http://localhost:3000/api/blogs/comment/{commentId}/{blogId}
     async deleteComment(req, res, next) {
         try {
             const { commentId, blogId } = req.params
