@@ -1,7 +1,30 @@
-const { deleteComment } = require('../services/blog.service.js');
+const { deleteComment, getBlogs } = require('../services/blog.service.js');
 const { BlogService } = require('../services/index.js')
 
 const BlogControllers = {
+
+    async getBlogs(req, res, next) {
+        try {
+            BlogService.getBlogs().then((data) => {
+                return res.status(200).json({
+                    message: "Successfully got all the blogs",
+                    blogs: data
+                })
+            }).catch((error) => {
+                return res.status(500).json({
+                    message: "Couldn\'t got the blogs",
+                    error: error
+                })
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                message: 'Internal Server error',
+                error: error
+            })
+        }
+    },
+
     async addBlog(req, res, next) {
         try {
             // Fetch UserId from the req.params
@@ -13,12 +36,15 @@ const BlogControllers = {
 
             // Call the addBlog function
             BlogService.addBlog(caption, image, video, userId).then((data) => {
-                res.status(200).json({
+                return res.status(200).json({
                     message: "Successfully posted",
                     blog: data.blog
                 })
             }).catch((error) => {
-                console.log(error);
+                return res.status(500).json({
+                    message: "Couldn\'t add the blog",
+                    error: error
+                })
             })
 
         } catch (error) {

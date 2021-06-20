@@ -1,6 +1,19 @@
 const { User, Blogs, Likes, Comments } = require('../models')
 
 const BlogService = {
+
+    async getBlogs() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let blogs = await Blogs.find().populate('likes').populate('comments')
+                console.log(blogs);
+                resolve(blogs || [])
+            } catch (error) {
+                reject([])
+            }
+        })
+    },
+
     async addBlog(caption, image, video, userId) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -106,12 +119,8 @@ const BlogService = {
 
     async deleteComment(commentId, blogId) {
         return new Promise(async (resolve, reject) => {
-
             try {
-
-
                 const comment = await Comments.findOneAndDelete({ _id: commentId })
-
 
                 const blog = await Blogs.findOneAndUpdate({ _id: blogId }, { $pull: { comments: commentId } })
                 console.log(blog);

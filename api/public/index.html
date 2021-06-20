@@ -19,7 +19,6 @@
         transports: ["websocket"],
         upgrade: true,
       });
-      console.log(socket.id);
       socket.on("connect", () => {
         console.log(socket.id);
         console.log("socket connected");
@@ -27,6 +26,11 @@
       socket.on("disconnect", () => {
         console.log("socket disconnected");
         // socket.connect();
+      });
+
+      socket.emit("global");
+      socket.on("globalUpdate", (data) => {
+        console.log(data);
       });
     </script>
   </head>

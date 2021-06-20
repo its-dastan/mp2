@@ -3,6 +3,7 @@ const router = express.Router()
 
 const { BlogControllers } = require('../controllers')
 
+router.get('/', BlogControllers.getBlogs)
 router.post('/upload/:userId', BlogControllers.addBlog)
 router.get('/like/:userId/:blogId', BlogControllers.likeOrDislike)
 router.post('/comment/:userId/:blogId', BlogControllers.addComment)
