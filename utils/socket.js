@@ -1,5 +1,4 @@
 const redisAdapter = require('socket.io-redis')
-const { init } = require('../api/models/auth.model')
 
 const globalConnection = []
 
@@ -10,11 +9,13 @@ const Socket = {
             const io = require('socket.io')(server, {
                 cors: { origin: '*' }
             })
-            io.on('connection', async(socket => {
+            io.on('connection', async (socket) => {
                 globalConnection.push(socket)
-                console.log('A new user joined');
+                console.log(socket.id);
+                // console.log('A new user joined');
                 console.log(globalConnection.length);
-            }))
+                socket.disconnect()
+            })
         } catch (error) {
             console.log('socket server error', error);
         }

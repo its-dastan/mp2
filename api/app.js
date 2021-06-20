@@ -7,6 +7,9 @@ const { AuthRoutes, UserRoutes, BlogRoutes } = require('./routes')
 // Define the express application
 const app = express()
 
+app.use(express.static('public'))
+
+
 // Open Mongoose Connection to db
 require('../db')
 
@@ -20,13 +23,15 @@ app.use(express.json())
 app.use(morgan('dev'))
 
 
+
 // Correct REST naming
 app.use('/api/auths', AuthRoutes)
 app.use('/api/users', UserRoutes)
 app.use('/api/blogs', BlogRoutes)
 
 app.get('/', (req, res) => {
-    res.send("Hello world")
+    res.sendFile(__dirname + "/public/index.html");
+    // res.send("Hello world")
     // res.sendFile('views/index.html')
 })
 
