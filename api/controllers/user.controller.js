@@ -1,6 +1,8 @@
 const { UserService } = require('../services')
 
 const UserControllers = {
+
+    // GET: http://localhost:3000/api/users/{userId}
     async getUser(req, res, next) {
         try {
             // Fetch data from the params
@@ -26,6 +28,7 @@ const UserControllers = {
         }
     },
 
+    // PUT: http://localhost:3000/api/users/{userId}
     async updateUser(req, res, next) {
         try {
             let { userId } = req.params
@@ -51,7 +54,7 @@ const UserControllers = {
             })
         }
     },
-
+    //PUT: http://localhost:3000/api/users/update/{userId}
     async updatePassword(req, res, next) {
         try {
             let { userId } = req.params

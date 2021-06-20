@@ -1,5 +1,6 @@
 const { AuthService } = require("../services")
 
+//POST: http://localhost:3000/api/auths/sign-in
 const AuthControllers = {
     async signIn(req, res, next) {
         try {
@@ -26,7 +27,7 @@ const AuthControllers = {
             })
         }
     },
-
+    // POST: http://localhost:3000/api/auths/sign-up
     async signUp(req, res, next) {
         try {
             // Fetch data from the requset body
